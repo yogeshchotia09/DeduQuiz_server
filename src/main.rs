@@ -163,7 +163,7 @@ async fn watch(
     data: web::Data<AppState>,
     req: HttpRequest,
     body: web::Payload,
-    params: web::Path<(GameId, Option<Id>)>,
+    params: web::Path<(GameId, String)>,
 ) -> Result<HttpResponse, actix_web::Error> {
     let (response, mut session, mut msg_stream) = actix_ws::handle(&req, body)?;
 
