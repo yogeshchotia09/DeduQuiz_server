@@ -18,6 +18,7 @@ use fuiz::{
 };
 use futures_util::StreamExt;
 use game_manager::GameManager;
+use garde::Validate;
 use itertools::Itertools;
 use serde_json::json;
 use std::sync::{
@@ -41,6 +42,8 @@ impl Session {
         Self { session }
     }
 }
+
+type MessageScheduler = Box<dyn Fn(fuiz::AlarmMessage, web_time::Duration)>;
 
 impl fuiz::session::Tunnel for Session {
     fn send_message(&self, message: &fuiz::UpdateMessage) {
@@ -74,7 +77,7 @@ struct AppState {
     game_manager: GameManager,
 }
 
-#[derive(serde::Deserialize, garde::Validate)]
+#[derive(serde::Deserialize, Validate)]
 struct GameRequest {
     #[garde(dive)]
     config: Fuiz,
@@ -180,9 +183,7 @@ async fn watch(
     actix_web::rt::spawn(async move {
         let schedule_thread = data_thread.clone();
 
-        let schedule_message: Arc<
-            OnceLock<Box<dyn Fn(fuiz::AlarmMessage, web_time::Duration) -> ()>>,
-        > = Default::default();
+        let schedule_message: Arc<OnceLock<MessageScheduler>> = Default::default();
 
         let thread_schedule_message = schedule_message.clone();
 

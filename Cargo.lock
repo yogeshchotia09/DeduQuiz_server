@@ -202,13 +202,14 @@ dependencies = [
 
 [[package]]
 name = "actix-ws"
-version = "0.2.5"
+version = "0.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "535aec173810be3ca6f25dd5b4d431ae7125d62000aa3cbae1ec739921b02cf3"
+checksum = "a3a1fb4f9f2794b0aadaf2ba5f14a6f034c7e86957b458c506a8cb75953f2d99"
 dependencies = [
  "actix-codec",
  "actix-http",
  "actix-web",
+ "bytestring",
  "futures-core",
  "tokio",
 ]
@@ -593,6 +594,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "crossbeam-utils"
+version = "0.8.20"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "22ec99545bb0ed0ea7bb9b8e1e9122ea386ff8a48c0922e43f36d45ab09e0e80"
+
+[[package]]
 name = "crypto-common"
 version = "0.1.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -639,11 +646,12 @@ dependencies = [
 
 [[package]]
 name = "dashmap"
-version = "5.5.3"
+version = "6.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "978747c1d849a7d2ee5e8adc0159961c48fb7e5db2f06af6723b80123bb53856"
+checksum = "804c8821570c3f8b70230c2ba75ffa5c0f9a4189b9a432b6656c536712acae28"
 dependencies = [
  "cfg-if",
+ "crossbeam-utils",
  "hashbrown 0.14.5",
  "lock_api",
  "once_cell",
@@ -806,7 +814,7 @@ dependencies = [
  "fastrand",
  "fuiz 0.1.0 (git+https://gitlab.com/opencode-mit/fuiz/game.git)",
  "futures-util",
- "garde 0.18.0",
+ "garde",
  "garde-actix-web",
  "itertools 0.12.1",
  "jiden",
@@ -834,7 +842,7 @@ dependencies = [
  "derive_more",
  "enum-map",
  "fastrand",
- "garde 0.20.0",
+ "garde",
  "heck",
  "itertools 0.13.0",
  "kinded",
@@ -945,56 +953,34 @@ dependencies = [
 
 [[package]]
 name = "garde"
-version = "0.18.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d5fa8fb3ffe035745c6194540b2064b2fe275f32367fbb4eb026024b7921e2e5"
-dependencies = [
- "compact_str",
- "garde_derive 0.18.0",
- "serde",
- "smallvec",
-]
-
-[[package]]
-name = "garde"
 version = "0.20.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0a3233677ea1554a48235d81bb59d2a41654969a8e29a1316c48105fd1701693"
 dependencies = [
  "compact_str",
- "garde_derive 0.20.0",
+ "garde_derive",
+ "serde",
  "smallvec",
 ]
 
 [[package]]
 name = "garde-actix-web"
-version = "0.5.1"
+version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "43d62b3df7fe124186df1612ec8793eb6bfcbad3eae901505a60695c59a89e41"
+checksum = "48eeb990086e76cfe30e673dd24e91b92ac7543cb83ae176cabed8fc678d4f8f"
 dependencies = [
  "actix-http",
  "actix-router",
  "actix-web",
  "derive_more",
  "futures",
- "garde 0.18.0",
+ "garde",
  "log",
  "mime",
  "pin-project-lite",
  "serde",
  "serde_urlencoded",
  "thiserror",
-]
-
-[[package]]
-name = "garde_derive"
-version = "0.18.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9cf62650515830c41553b72bd49ec20fb120226f9277c7f2847f071cf998325b"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn 2.0.75",
 ]
 
 [[package]]

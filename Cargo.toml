@@ -12,8 +12,8 @@ https = []
 fuiz = { git = "https://gitlab.com/opencode-mit/fuiz/game.git" }
 actix-cors = "0.7"
 actix-web = "4"
-actix-ws = "0.2"
-dashmap = "5"
+actix-ws = "0.3"
+dashmap = "6"
 derive-where = "1"
 enum-map = { version = "2", features = ["serde"] }
 fastrand = "2"
@@ -28,8 +28,8 @@ serde_json = "1.0"
 serde_with = { version = "3", features = ["chrono"] }
 thiserror = "1.0"
 uuid = { version = "1", features = ["v4", "serde"] }
-garde-actix-web = "0.5"
-garde = "0.18"
+garde-actix-web = "0.9"
+garde = "0.20"
 parking_lot = "0.12"
 unbox-box = "0.1.0"
 num-integer = "0.1"
