@@ -1,7 +1,6 @@
 use std::{borrow::Borrow, fmt::Debug};
 
 use dashmap::{mapref::entry::Entry, DashMap};
-use itertools::Itertools;
 
 #[derive(Clone)]
 #[derive_where::derive_where(Default)]
@@ -50,7 +49,7 @@ where
         self.0
             .iter()
             .map(|e| (e.key().clone(), e.value().clone()))
-            .collect_vec()
+            .collect()
     }
 
     // pub fn insert_if_vacant(&self, key: K, value: V) -> Option<(K, V)> {

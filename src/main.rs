@@ -19,7 +19,6 @@ use fuiz::{
 use futures_util::StreamExt;
 use game_manager::GameManager;
 use garde::Validate;
-use itertools::Itertools;
 use serde_json::json;
 use std::sync::{
     atomic::{AtomicU64, Ordering},
@@ -100,7 +99,7 @@ async fn add(
     // Stale Detection
     actix_web::rt::spawn(async move {
         loop {
-            actix_web::rt::time::sleep(std::time::Duration::from_secs(60)).await;
+            actix_web::rt::time::sleep(web_time::Duration::from_secs(60)).await;
             match stale_data.game_manager.alive_check(game_id) {
                 Ok(true) => continue,
                 Ok(false) => {
@@ -141,7 +140,7 @@ fn websocket_heartbeat_verifier(mut session: actix_ws::Session) -> impl Fn(bytes
     let sender_latest_value = latest_value.clone();
     actix_web::rt::spawn(async move {
         loop {
-            actix_web::rt::time::sleep(std::time::Duration::from_secs(5)).await;
+            actix_web::rt::time::sleep(web_time::Duration::from_secs(5)).await;
             let new_value = fastrand::u64(0..u64::MAX);
             sender_latest_value.store(new_value, Ordering::SeqCst);
             if session.ping(&new_value.to_ne_bytes()).await.is_err() {
@@ -152,7 +151,7 @@ fn websocket_heartbeat_verifier(mut session: actix_ws::Session) -> impl Fn(bytes
 
     move |bytes: bytes::Bytes| {
         let last_value = latest_value.load(Ordering::SeqCst);
-        if let Ok(actual_bytes) = bytes.into_iter().collect_vec().try_into() {
+        if let Ok(actual_bytes) = bytes.into_iter().collect::<Vec<_>>().try_into() {
             if u64::from_ne_bytes(actual_bytes) == last_value {
                 return false;
             }
