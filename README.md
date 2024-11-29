@@ -8,13 +8,21 @@ Host live quizzes freely
 
 ## Developing
 
-This is the backend component. It can be run with:
+This is a self-hostable version of the backend component. It can be run with:
 
-```
+```bash
 cargo run
 ```
 
-This will open a server listening to port 8080.
+This will open a server listening to port 8080 (or the enviroment variable `PORT`).
+
+You can also pass the feature flag:
+
+```bash
+cargo run --features expose-network
+```
+
+This will open a server listening to local network as well. You can also set the environment variable `NETWORK_ORIGIN` to be the exposed URL in case you encounter CORS issues.
 
 ### Creating a game
 

@@ -20,9 +20,12 @@ use futures_util::StreamExt;
 use game_manager::GameManager;
 use garde::Validate;
 use serde_json::json;
-use std::sync::{
-    atomic::{AtomicU64, Ordering},
-    Arc, OnceLock,
+use std::{
+    env,
+    sync::{
+        atomic::{AtomicU64, Ordering},
+        Arc, OnceLock,
+    },
 };
 
 use crate::game_manager::GameVanish;
@@ -326,10 +329,10 @@ async fn main() -> std::io::Result<()> {
             .service(count)
             .service(watch);
 
-        #[cfg(feature = "https")]
+        #[cfg(feature = "expose-network")]
         {
             let cors = actix_cors::Cors::default()
-                .allowed_origin("https://fuiz.us")
+                .allowed_origin(env::var("NETWORK_ORIGIN").unwrap_or_else(|_| "*"))
                 .allowed_methods(vec!["GET", "POST"])
                 .allowed_headers(vec![
                     actix_web::http::header::AUTHORIZATION,
@@ -338,19 +341,22 @@ async fn main() -> std::io::Result<()> {
                 .allowed_header(actix_web::http::header::CONTENT_TYPE);
             app.wrap(cors)
         }
-        #[cfg(not(feature = "https"))]
+        #[cfg(not(feature = "expose-network"))]
         {
             let cors = actix_cors::Cors::permissive();
             app.wrap(cors)
         }
     })
     .bind((
-        if cfg!(feature = "https") {
+        if cfg!(feature = "expose-network") {
             "127.0.0.1"
         } else {
             "0.0.0.0"
         },
-        8080,
+        env::var("PORT")
+            .ok()
+            .and_then(|port| port.parse::<u16>().ok())
+            .unwrap_or(8080),
     ))?
     .run()
     .await
