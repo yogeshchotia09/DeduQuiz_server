@@ -830,34 +830,6 @@ dependencies = [
 [[package]]
 name = "fuiz"
 version = "0.1.0"
-dependencies = [
- "actix-cors",
- "actix-web",
- "actix-ws",
- "bytes",
- "dashmap",
- "derive-where",
- "enum-map",
- "fastrand",
- "fuiz 0.1.0 (git+https://gitlab.com/opencode-mit/fuiz/game.git)",
- "futures-util",
- "garde",
- "garde-actix-web",
- "jiden",
- "log",
- "parking_lot",
- "pretty_env_logger",
- "serde",
- "serde_json",
- "thiserror 2.0.6",
- "unbox-box",
- "uuid",
- "web-time",
-]
-
-[[package]]
-name = "fuiz"
-version = "0.1.0"
 source = "git+https://gitlab.com/opencode-mit/fuiz/game.git#c2fc63d1072fad696e0f31113a6495b7dc6912d5"
 dependencies = [
  "derive-where",
@@ -880,6 +852,34 @@ dependencies = [
  "serde_with",
  "static-toml",
  "thiserror 2.0.6",
+ "uuid",
+ "web-time",
+]
+
+[[package]]
+name = "fuiz-server"
+version = "0.1.0"
+dependencies = [
+ "actix-cors",
+ "actix-web",
+ "actix-ws",
+ "bytes",
+ "dashmap",
+ "derive-where",
+ "enum-map",
+ "fastrand",
+ "fuiz",
+ "futures-util",
+ "garde",
+ "garde-actix-web",
+ "jiden",
+ "log",
+ "parking_lot",
+ "pretty_env_logger",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.6",
+ "unbox-box",
  "uuid",
  "web-time",
 ]
