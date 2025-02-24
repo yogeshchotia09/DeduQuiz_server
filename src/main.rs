@@ -329,10 +329,9 @@ async fn main() -> std::io::Result<()> {
             .service(count)
             .service(watch);
 
-        #[cfg(feature = "expose-network")]
-        {
+        if cfg!(feature = "expose-network") {
             let cors = actix_cors::Cors::default()
-                .allowed_origin(env::var("NETWORK_ORIGIN").unwrap_or_else(|_| "*"))
+                .allowed_origin(&env::var("NETWORK_ORIGIN").unwrap_or_else(|_| "*".to_string()))
                 .allowed_methods(vec!["GET", "POST"])
                 .allowed_headers(vec![
                     actix_web::http::header::AUTHORIZATION,
@@ -340,9 +339,7 @@ async fn main() -> std::io::Result<()> {
                 ])
                 .allowed_header(actix_web::http::header::CONTENT_TYPE);
             app.wrap(cors)
-        }
-        #[cfg(not(feature = "expose-network"))]
-        {
+        } else {
             let cors = actix_cors::Cors::permissive();
             app.wrap(cors)
         }
