@@ -344,17 +344,17 @@ async fn main() -> std::io::Result<()> {
             app.wrap(cors)
         }
     })
-    .bind((
-        if cfg!(feature = "expose-network") {
-            "127.0.0.1"
-        } else {
-            "0.0.0.0"
-        },
-        env::var("PORT")
-            .ok()
-            .and_then(|port| port.parse::<u16>().ok())
-            .unwrap_or(8080),
-    ))?
+    // Get PORT from environment or fallback
+let port: u16 = env::var("PORT")
+    .ok()
+    .and_then(|p| p.parse().ok())
+    .unwrap_or(8080);
+
+// Always bind to 0.0.0.0 on Render
+let host = "0.0.0.0";
+
+.bind((host, port))?
+
     .run()
     .await
 }
